@@ -1,0 +1,4 @@
+﻿WorkspaceName,ReportName
+Global Quality,ds_global_inventory_model
+Global Quality,ds_global_customer_otd_model
+Global Quality,ds_global_cycle_count_activity_model

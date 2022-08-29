@@ -1,22 +1,26 @@
 Connect-PowerBIServiceAccount | Out-Null
 
-$workspaceName = "Dev Camp Demos"
-$datasetName = "COVID-US"
 
-# get object for target workspace
-$workspace = Get-PowerBIWorkspace -Name $workspaceName
+# loop through the pipelines file to get parameters
+Import-Csv "$PSScriptRoot/deployment/reports_to_delete.csv" | ForEach-Object {
 
-# get object for new dataset
-$dataset = Get-PowerBIDataset -WorkspaceId $workspace.Id | Where-Object Name -eq $datasetName
+    $workspaceName = $_.WorkspaceName
+    $datasetName = $_.ReportName
 
-# determine workspace Id and Dataset Id
-$workspaceId = $workspace.Id
-$datasetId = $dataset.Id
+    # get object for target workspace
+    $workspace = Get-PowerBIWorkspace -Name $workspaceName
 
-# parse REST Url for Power BI Service to delete dataset
-$restUrl = "groups/$workspaceId/datasets/$datasetId"
+    # get object for new dataset
+    $dataset = Get-PowerBIDataset -WorkspaceId $workspace.Id | Where-Object Name -eq $datasetName
 
-# execute HTTP DELETE operation to delete dataset
-Invoke-PowerBIRestMethod -Method Delete -Url $restUrl
+    # determine workspace Id and Dataset Id
+    $workspaceId = $workspace.Id
+    $datasetId = $dataset.Id
 
+    # parse REST Url for Power BI Service to delete dataset
+    $restUrl = "groups/$workspaceId/datasets/$datasetId"
+
+    # execute HTTP DELETE operation to delete dataset
+    Invoke-PowerBIRestMethod -Method Delete -Url $restUrl
+}
 

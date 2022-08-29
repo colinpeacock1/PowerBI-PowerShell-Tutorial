@@ -1,0 +1,4 @@
+﻿SourceWorkspaceName,TargetWorkspaceName,ReportName
+Global Inventory Dev,Global Quality,ds_global_inventory_model
+Global Order Admin Dev,Global Quality,ds_global_customer_otd_model
+Global Inventory Dev,Global Quality,ds_global_cycle_count_activity_model
